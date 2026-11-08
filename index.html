@@ -1,0 +1,420 @@
+<!-- Menentukan bahwa dokumen menggunakan HTML5. -->
+<!doctype html>
+<!-- Bahasa utama konten adalah Inggris; atribut lang membantu pembaca layar memahami bahasa teks. -->
+<html lang="en">
+  <!-- Berisi pengaturan halaman dan tautan CSS, bukan konten utama yang tampil di layar. -->
+  <head>
+    <!-- Memakai UTF-8 agar simbol panah, hak cipta, dan karakter khusus terbaca dengan benar. -->
+    <meta charset="UTF-8" />
+    <!-- Menyesuaikan viewport dengan lebar perangkat supaya aturan responsif CSS bekerja di HP. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Deskripsi singkat halaman yang dapat digunakan mesin pencari sebagai ringkasan. -->
+    <meta
+      name="description"
+      content="DDSalonBali — Balinese bridal makeup and wedding beauty studio in Denpasar, Bali."
+    />
+    <!-- Menentukan judul yang terlihat di tab browser. -->
+    <title>DDSalonBali | Balinese Bridal Artistry</title>
+    <!-- Menghubungkan halaman dengan style.css; class di bawah menjadi pengait aturan tampilannya. -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <!-- Awal seluruh konten yang ditampilkan di halaman browser. -->
+  <body>
+    <!-- Wadah konten utama halaman, mulai dari navigasi hingga informasi penutup. -->
+    <main>
+      <!-- NAVBAR: menampilkan identitas salon, tautan antarbagian, dan ajakan booking di atas foto pembuka. -->
+      <header class="navbar">
+        <!-- Logo dapat diklik untuk menuju id home; aria-label memberi nama tautan untuk pembaca layar. -->
+        <a href="#home" aria-label="DDSalonBali home">
+          <!-- Logo versi terang agar kontras dengan foto pembuka yang gelap. -->
+          <div class="brand-mark brand-mark--light">
+            <!-- Monogram merek; ukuran dan kerapatan huruf diatur oleh class brand-monogram. -->
+            <span class="brand-monogram">DD</span>
+            <!-- Nama salon yang ditempatkan di bawah monogram. -->
+            <span class="brand-name">SALON BALI</span>
+          </div>
+        </a>
+
+        <!-- Menyimpan status buka/tutup menu HP; CSS :checked menampilkan panel tanpa memerlukan JavaScript. -->
+        <input class="menu-checkbox" type="checkbox" id="menu-toggle" />
+        <!-- Label mengubah checkbox dengan id menu-toggle saat diklik; dua span kosong digambar sebagai garis ikon oleh CSS. -->
+        <label class="menu-toggle" for="menu-toggle" aria-label="Toggle navigation">
+          <span></span><span></span>
+        </label>
+
+        <!-- Tautan dengan href pagar menggulir ke section dengan id yang sama: home, about, services, gallery, atau contact. -->
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <!-- Membuka WhatsApp dengan pesan awal. Target _blank meminta tab baru; rel noreferrer mencegah pengiriman informasi halaman asal. -->
+        <a
+          class="nav-book"
+          href="https://wa.me/6285238051288?text=Hello%20DDSalonBali%2C%20I%27d%20like%20to%20ask%20about%20bridal%20services."
+          target="_blank"
+          rel="noreferrer"
+        >
+          Book an appointment <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+
+      <!-- HERO: bagian pembuka berisi foto besar, judul utama, deskripsi, dan tombol layanan atau booking. -->
+      <section class="hero" id="home">
+        <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+        <img
+          class="hero-image"
+          src="https://images.unsplash.com/photo-1694105468162-c05fbc45d044?auto=format&fit=crop&w=1800&q=90"
+          alt="Balinese bride in an ornate golden headdress"
+        />
+        <!-- Lapisan gradasi gelap di atas foto agar teks putih lebih jelas. -->
+        <div class="hero-shade"></div>
+        <!-- Mengelompokkan teks dan tombol supaya posisinya dapat diatur bersama di atas foto. -->
+        <div class="hero-copy">
+          <!-- Label kecil di atas judul; span kosong di dalamnya menjadi garis dekoratif melalui CSS. -->
+          <p class="eyebrow eyebrow--light"><span></span> Balinese bridal artistry</p>
+          <!-- Judul utama halaman; br memutus baris dan em memberi penekanan miring yang diwarnai emas oleh CSS. -->
+          <h1>The Art of<br /><em>Balinese</em> Bridal Beauty</h1>
+          <!-- Deskripsi pembuka; br dengan class desktop-break disembunyikan pada HP kecil agar teks membungkus alami. -->
+          <p class="hero-subtitle">
+            Creating timeless beauty for<br class="desktop-break" />
+            your most meaningful moments.
+          </p>
+          <!-- Mengelompokkan dua ajakan bertindak: melihat layanan dan membuka percakapan WhatsApp. -->
+          <div class="hero-actions">
+            <!-- Tautan bergaya tombol emas untuk menggulir ke bagian layanan. -->
+            <a class="button button--gold" href="#services">
+              Explore Services <span aria-hidden="true">→</span>
+            </a>
+            <!-- Membuka WhatsApp dengan pesan awal. Target _blank meminta tab baru; rel noreferrer mencegah pengiriman informasi halaman asal. -->
+            <a
+              class="text-link text-link--light"
+              href="https://wa.me/6285238051288?text=Hello%20DDSalonBali%2C%20I%27d%20like%20to%20ask%20about%20bridal%20services."
+              target="_blank"
+              rel="noreferrer"
+            >
+              Book via WhatsApp <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <!-- Slogan dekoratif vertikal; span menjadi garis melalui CSS dan bagian ini disembunyikan di layar kecil. -->
+        <div class="hero-vertical">Beauty rooted in tradition <span></span></div>
+        <!-- Petunjuk sekaligus tautan untuk menggulir menuju bagian cerita salon. -->
+        <a href="#about" class="scroll-note">Scroll to discover <span>↓</span></a>
+      </section>
+
+      <!-- ABOUT: foto dan cerita salon. Class section memberi padding bersama, sedangkan about mengatur layout khususnya. -->
+      <section class="about section" id="about">
+        <!-- Wadah foto dan bingkai dekoratif; bingkai dibuat oleh CSS ::before pada about-image-wrap. Class reveal-frame belum memiliki aturan tersendiri. -->
+        <div class="about-image-wrap reveal-frame">
+          <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+          <img
+            src="https://images.unsplash.com/photo-1700892350258-80ce6df5e62b?auto=format&fit=crop&w=1100&q=88"
+            alt="Bride wearing traditional Indonesian bridal styling"
+          />
+          <!-- Keterangan singkat yang diposisikan di dekat bagian bawah foto. -->
+          <div class="image-caption">Bespoke bridal styling<br />Denpasar, Bali</div>
+        </div>
+        <!-- Wadah label, judul, paragraf cerita, dan tautan menuju galeri. -->
+        <div class="about-copy">
+          <!-- Label kecil di atas judul; span kosong di dalamnya menjadi garis dekoratif melalui CSS. -->
+          <p class="eyebrow"><span></span> Our story</p>
+          <h2>Where tradition<br />becomes <em>art.</em></h2>
+          <!-- Membatasi lebar isi cerita agar paragraf lebih nyaman dibaca. -->
+          <div class="about-body">
+            <!-- Paragraf pengantar dengan ukuran lebih besar untuk memperkenalkan salon. -->
+            <p class="intro">
+              DDSalonBali is a bridal beauty studio devoted to the extraordinary artistry of
+              Balinese tradition.
+            </p>
+            <p>
+              We believe your wedding beauty should feel unmistakably yours. From the ceremonial
+              elegance of Payas Agung to modern, softly sculpted makeup, every detail is composed
+              with care, calm, and deep respect for heritage.
+            </p>
+            <!-- Mengajak pengunjung melihat karya dengan menggulir ke id gallery. -->
+            <a class="text-link" href="#gallery">
+              Discover our artistry <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+        <!-- Wadah ornamen bunga samar di tepi bagian cerita. -->
+        <div class="about-floral">
+          <!-- Menggambar ornamen bunga sebagai SVG yang tetap tajam saat diperbesar. ViewBox menentukan koordinat; path d menggambar batang, daun, dan kelopak. Ornamen disembunyikan dari pembaca layar. -->
+          <svg class="floral-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <path
+              d="M50 88V38M50 58c-16-2-27-12-29-28 16 2 27 12 29 28ZM50 68c17-1 28-11 31-27-17 1-28 11-31 27Z"
+            />
+            <path d="M50 42c-10-7-12-18 0-29 12 11 10 22 0 29Z" />
+            <path d="M43 86h14M38 92h24" />
+          </svg>
+        </div>
+      </section>
+
+      <!-- SERVICES: daftar empat layanan; setiap kartu membuka WhatsApp dengan pesan sesuai layanan yang dipilih. -->
+      <section class="services section" id="services">
+        <!-- Mengelompokkan judul dan penjelasan layanan sebelum daftar kartu. -->
+        <div class="section-heading">
+          <div>
+            <!-- Label kecil di atas judul; span kosong di dalamnya menjadi garis dekoratif melalui CSS. -->
+            <p class="eyebrow"><span></span> Our expertise</p>
+            <h2>Beauty for every<br /><em>sacred moment.</em></h2>
+          </div>
+          <p>
+            Thoughtful beauty rituals and complete styling, created to honour your story and the
+            beauty of Balinese ceremony.
+          </p>
+        </div>
+
+        <!-- Wadah kartu: empat kolom desktop, dua kolom tablet, dan dapat digeser mendatar pada HP kecil. -->
+        <div class="service-grid">
+          <!-- Kartu layanan yang seluruh areanya bisa diklik. Parameter text pada URL WhatsApp mengisi pesan awal sesuai nama layanan. -->
+          <a
+            class="service-card"
+            href="https://wa.me/6285238051288?text=Hello%20DDSalonBali%2C%20I%27d%20like%20to%20ask%20about%20Payas%20Agung."
+            target="_blank"
+            rel="noreferrer"
+          >
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1655394275931-ab40b901466f?auto=format&fit=crop&w=900&q=88"
+              alt="Payas Agung"
+            />
+            <!-- Gradasi di atas foto kartu untuk memperjelas nama layanan di bagian bawah. -->
+            <div class="service-overlay"></div>
+            <!-- Nomor urut layanan yang ditampilkan di pojok kiri atas kartu. -->
+            <span class="service-number">01</span>
+            <!-- Mengelompokkan kalimat pengantar dan nama layanan pada kartu. -->
+            <div class="service-info">
+              <span>The crown of Balinese beauty</span>
+              <h3>Payas Agung</h3>
+            </div>
+            <!-- Panah dekoratif menandai kartu sebagai tautan; aria-hidden menyembunyikannya dari pembaca layar. -->
+            <span class="service-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <!-- Kartu layanan yang seluruh areanya bisa diklik. Parameter text pada URL WhatsApp mengisi pesan awal sesuai nama layanan. -->
+          <a
+            class="service-card"
+            href="https://wa.me/6285238051288?text=Hello%20DDSalonBali%2C%20I%27d%20like%20to%20ask%20about%20Metatah."
+            target="_blank"
+            rel="noreferrer"
+          >
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1627974629992-47e19a3edb06?auto=format&fit=crop&w=900&q=88"
+              alt="Metatah"
+            />
+            <!-- Gradasi di atas foto kartu untuk memperjelas nama layanan di bagian bawah. -->
+            <div class="service-overlay"></div>
+            <!-- Nomor urut layanan yang ditampilkan di pojok kiri atas kartu. -->
+            <span class="service-number">02</span>
+            <!-- Mengelompokkan kalimat pengantar dan nama layanan pada kartu. -->
+            <div class="service-info">
+              <span>Beauty for a sacred passage</span>
+              <h3>Metatah</h3>
+            </div>
+            <!-- Panah dekoratif menandai kartu sebagai tautan; aria-hidden menyembunyikannya dari pembaca layar. -->
+            <span class="service-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <!-- Kartu layanan yang seluruh areanya bisa diklik. Parameter text pada URL WhatsApp mengisi pesan awal sesuai nama layanan. -->
+          <a
+            class="service-card"
+            href="https://wa.me/6285238051288?text=Hello%20DDSalonBali%2C%20I%27d%20like%20to%20ask%20about%20Prewedding%20makeup."
+            target="_blank"
+            rel="noreferrer"
+          >
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1671517477698-fafce6ec9c02?auto=format&fit=crop&w=1100&q=88"
+              alt="Prewedding Makeup"
+            />
+            <!-- Gradasi di atas foto kartu untuk memperjelas nama layanan di bagian bawah. -->
+            <div class="service-overlay"></div>
+            <!-- Nomor urut layanan yang ditampilkan di pojok kiri atas kartu. -->
+            <span class="service-number">03</span>
+            <!-- Mengelompokkan kalimat pengantar dan nama layanan pada kartu. -->
+            <div class="service-info">
+              <span>Portraits of a timeless love</span>
+              <h3>Prewedding</h3>
+            </div>
+            <!-- Panah dekoratif menandai kartu sebagai tautan; aria-hidden menyembunyikannya dari pembaca layar. -->
+            <span class="service-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <!-- Kartu layanan yang seluruh areanya bisa diklik. Parameter text pada URL WhatsApp mengisi pesan awal sesuai nama layanan. -->
+          <a
+            class="service-card"
+            href="https://wa.me/6285238051288?text=Hello%20DDSalonBali%2C%20I%27d%20like%20to%20ask%20about%20Wedding%20Styling."
+            target="_blank"
+            rel="noreferrer"
+          >
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1698824554105-14f885508883?auto=format&fit=crop&w=1000&q=88"
+              alt="Wedding Styling"
+            />
+            <!-- Gradasi di atas foto kartu untuk memperjelas nama layanan di bagian bawah. -->
+            <div class="service-overlay"></div>
+            <!-- Nomor urut layanan yang ditampilkan di pojok kiri atas kartu. -->
+            <span class="service-number">04</span>
+            <!-- Mengelompokkan kalimat pengantar dan nama layanan pada kartu. -->
+            <div class="service-info">
+              <span>Every detail, beautifully considered</span>
+              <h3>Wedding Styling</h3>
+            </div>
+            <!-- Panah dekoratif menandai kartu sebagai tautan; aria-hidden menyembunyikannya dari pembaca layar. -->
+            <span class="service-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- GALLERY: kumpulan foto yang disusun seperti kolase menggunakan grid CSS. -->
+      <section class="gallery section" id="gallery">
+        <!-- Judul galeri dan tautan ke akun Instagram salon. -->
+        <div class="gallery-heading">
+          <!-- Label kecil di atas judul; span kosong di dalamnya menjadi garis dekoratif melalui CSS. -->
+          <p class="eyebrow"><span></span> Selected work</p>
+          <h2>Stories in <em>beauty.</em></h2>
+          <!-- Membuka profil Instagram di tab baru untuk melihat karya lainnya. -->
+          <a
+            class="text-link"
+            href="https://instagram.com/ddsalonbali"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Follow on Instagram <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <!-- Wadah kolase; posisi setiap foto diatur melalui class gallery-item dengan variasi a sampai e. -->
+        <div class="masonry">
+          <!-- Foto A: potret pengantin; figure mengelompokkan gambar dengan keterangannya. -->
+          <figure class="gallery-item gallery-item--a">
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1650377509428-11e7fe8614a9?auto=format&fit=crop&w=1000&q=88"
+              alt="Traditional bridal portrait"
+            />
+            <!-- Keterangan foto yang muncul saat hover pada layar besar dan disembunyikan pada HP kecil oleh CSS. -->
+            <figcaption>Bridal portraiture</figcaption>
+          </figure>
+          <!-- Foto B: contoh penataan Payas Agung. -->
+          <figure class="gallery-item gallery-item--b">
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1700892195670-1b5ef0e5ae83?auto=format&fit=crop&w=1000&q=88"
+              alt="Ornate Balinese ceremonial styling"
+            />
+            <!-- Keterangan foto yang muncul saat hover pada layar besar dan disembunyikan pada HP kecil oleh CSS. -->
+            <figcaption>Payas Agung</figcaption>
+          </figure>
+          <!-- Foto C: suasana upacara tradisional Bali. -->
+          <figure class="gallery-item gallery-item--c">
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1542897644-e04428948020?auto=format&fit=crop&w=1000&q=88"
+              alt="Balinese women in a traditional ceremony"
+            />
+            <!-- Keterangan foto yang muncul saat hover pada layar besar dan disembunyikan pada HP kecil oleh CSS. -->
+            <figcaption>Ceremonial beauty</figcaption>
+          </figure>
+          <!-- Foto D: detail penataan rambut dan bunga. -->
+          <figure class="gallery-item gallery-item--d">
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1646235396727-6de6c78d1c66?auto=format&fit=crop&w=1000&q=88"
+              alt="Woman with floral hair styling"
+            />
+            <!-- Keterangan foto yang muncul saat hover pada layar besar dan disembunyikan pada HP kecil oleh CSS. -->
+            <figcaption>Modern tradition</figcaption>
+          </figure>
+          <!-- Foto E: pasangan dalam busana pernikahan tradisional. -->
+          <figure class="gallery-item gallery-item--e">
+            <!-- Memuat foto dari URL Unsplash; src menentukan sumber gambar dan alt memberi deskripsi alternatif untuk aksesibilitas atau saat foto gagal dimuat. -->
+            <img
+              src="https://images.unsplash.com/photo-1650377509488-724221735c19?auto=format&fit=crop&w=1100&q=88"
+              alt="Couple in traditional wedding attire"
+            />
+            <!-- Keterangan foto yang muncul saat hover pada layar besar dan disembunyikan pada HP kecil oleh CSS. -->
+            <figcaption>Wedding stories</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- CONTACT: ajakan menghubungi salon melalui WhatsApp atau nomor telepon. -->
+      <section class="contact" id="contact">
+        <!-- Wadah kosong yang diisi pola lingkaran dekoratif oleh background-image CSS. -->
+        <div class="contact-pattern"></div>
+        <!-- Menggambar ornamen bunga sebagai SVG yang tetap tajam saat diperbesar. ViewBox menentukan koordinat; path d menggambar batang, daun, dan kelopak. Ornamen disembunyikan dari pembaca layar. -->
+        <svg class="floral-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path
+            d="M50 88V38M50 58c-16-2-27-12-29-28 16 2 27 12 29 28ZM50 68c17-1 28-11 31-27-17 1-28 11-31 27Z"
+          />
+          <path d="M50 42c-10-7-12-18 0-29 12 11 10 22 0 29Z" />
+          <path d="M43 86h14M38 92h24" />
+        </svg>
+        <!-- Label kecil di atas judul; span kosong di dalamnya menjadi garis dekoratif melalui CSS. -->
+        <p class="eyebrow eyebrow--light"><span></span> Your day, beautifully yours</p>
+        <h2>Let Us Be Part of<br /><em>Your Special Day.</em></h2>
+        <p>
+          Tell us about your celebration and discover a bridal experience<br
+            class="desktop-break"
+          />
+          shaped with artistry, intention, and heart.
+        </p>
+        <!-- Membuka WhatsApp dengan pesan awal. Target _blank meminta tab baru; rel noreferrer mencegah pengiriman informasi halaman asal. -->
+        <a
+          class="button button--gold contact-button"
+          href="https://wa.me/6285238051288?text=Hello%20DDSalonBali%2C%20I%27d%20like%20to%20book%20a%20bridal%20service."
+          target="_blank"
+          rel="noreferrer"
+        >
+          Chat on WhatsApp <span aria-hidden="true">↗</span>
+        </a>
+        <!-- Skema tel membuka aplikasi telepon yang tersedia pada perangkat pengunjung. -->
+        <a class="phone" href="tel:+6285238051288">+62 852 3805 1288</a>
+      </section>
+
+      <!-- FOOTER: informasi merek, lokasi, media sosial, dan hak cipta di bagian akhir halaman. -->
+      <footer>
+        <!-- Wadah kolom informasi penutup; jumlah kolom menyesuaikan ukuran layar. -->
+        <div class="footer-main">
+          <!-- Kelompok logo dan slogan salon di footer. -->
+          <div class="footer-brand">
+            <!-- Logo versi warna bawaan untuk latar footer yang terang. -->
+            <div class="brand-mark">
+              <!-- Monogram merek; ukuran dan kerapatan huruf diatur oleh class brand-monogram. -->
+              <span class="brand-monogram">DD</span>
+              <!-- Nama salon yang ditempatkan di bawah monogram. -->
+              <span class="brand-name">SALON BALI</span>
+            </div>
+            <p>Balinese bridal artistry,<br />made personal.</p>
+          </div>
+          <!-- Kolom informasi lokasi atau tautan kontak; judul dan isi disusun vertikal oleh CSS. -->
+          <div class="footer-column">
+            <span>Visit us</span>
+            <p>Denpasar<br />Bali, Indonesia</p>
+          </div>
+          <!-- Kolom informasi lokasi atau tautan kontak; judul dan isi disusun vertikal oleh CSS. -->
+          <div class="footer-column">
+            <span>Connect</span>
+            <a href="https://instagram.com/ddsalonbali" target="_blank" rel="noreferrer">
+              @ddsalonbali
+            </a>
+            <a href="https://wa.me/6285238051288" target="_blank" rel="noreferrer"> WhatsApp </a>
+          </div>
+          <!-- Tombol panah untuk kembali ke bagian home, dengan nama yang dapat dibaca pembaca layar. -->
+          <a class="back-top" href="#home" aria-label="Back to top">↑</a>
+        </div>
+        <!-- Baris paling bawah berisi tahun hak cipta dan nilai merek salon. -->
+        <div class="footer-bottom">
+          <span>© 2025 DDSalonBali</span>
+          <span>Beauty · Heritage · Artistry</span>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

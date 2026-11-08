@@ -1,0 +1,1053 @@
+/* PANDUAN: selector .nama memilih class HTML, #nama memilih id, dan :hover berlaku saat kursor berada di atas elemen.
+   Aturan di dalam @media menyesuaikan tampilan berdasarkan lebar layar.
+   px = piksel, vw = persen lebar viewport, fr = bagian ruang grid; clamp(min, ideal, max) membatasi nilai responsif.
+   Komentar hanya untuk membaca kode dan tidak tampil pada halaman. */
+
+/* Memuat Inter untuk teks dan Playfair Display untuk judul dari Google Fonts; font cadangan dipakai bila font belum tersedia. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap");
+
+/* Menghitung padding dan border sebagai bagian dari ukuran elemen agar ukuran layout lebih mudah dikendalikan. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Menghapus margin bawaan browser supaya jarak antarbagian diatur sendiri secara konsisten. */
+html,
+body,
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+/* Membuat gambar menjadi elemen blok agar tidak menyisakan celah baseline seperti teks. */
+img,
+svg {
+  display: block;
+}
+
+/* Membuat kontrol formulir mengikuti font elemen induknya. */
+button,
+input {
+  font: inherit;
+}
+
+/* Menyimpan warna dan keluarga font sebagai variabel global. Ubah nilai di sini untuk mengganti tema di seluruh halaman. */
+:root {
+  --ivory: #f8f4ec;
+  --gold: #c5a46d;
+  --burgundy: #521f2b;
+  --espresso: #29231f;
+  --beige: #e9dfd0;
+  --serif: "Playfair Display", Georgia, serif;
+  --sans: "Inter", Arial, sans-serif;
+}
+
+/* Mengelompokkan gaya dasar; aturan normal di luar layer dapat mengalahkan aturan normal dalam layer ini. */
+@layer base {
+  /* Membuat perpindahan ke bagian halaman melalui tautan pagar terasa halus. */
+  html {
+    scroll-behavior: smooth;
+  }
+  /* Mengatur warna latar, warna tulisan, dan font utama seluruh halaman. */
+  body {
+    background: var(--ivory);
+    color: var(--espresso);
+    font-family: var(--sans);
+  }
+  /* Membuat tautan mengikuti warna induk dan menghilangkan garis bawah bawaan. */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  /* Menampilkan kursor tangan pada elemen tombol. */
+  button {
+    cursor: pointer;
+  }
+}
+
+/* Mengatur warna latar dan teks ketika pengunjung menyeleksi tulisan. */
+::selection {
+  background: var(--burgundy);
+  color: var(--ivory);
+}
+
+/* Menempatkan navigasi di atas hero. Grid membagi ruang untuk logo, menu, dan tautan booking; z-index menjaga navbar di depan gambar. */
+.navbar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  height: 108px;
+  padding: 0 clamp(28px, 5.5vw, 84px);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Menyusun monogram dan nama salon secara vertikal dengan posisi rata tengah. */
+.brand-mark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  line-height: 1;
+}
+/* Membuat huruf DD bergaya serif dan rapat seperti sebuah logo. */
+.brand-monogram {
+  font-family: var(--serif);
+  font-size: 30px;
+  letter-spacing: -4px;
+  margin-right: 4px;
+}
+/* Membuat nama salon kecil dengan jarak huruf lebar di bawah monogram. */
+.brand-name {
+  font-size: 8px;
+  letter-spacing: 0.32em;
+  margin-top: 6px;
+  font-weight: 500;
+}
+/* Memberi logo warna putih agar terlihat pada latar gelap. */
+.brand-mark--light {
+  color: #fff;
+}
+/* Menyusun tautan menu berjajar dengan jarak yang menyesuaikan lebar layar. */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 2.7vw, 44px);
+}
+/* Mengatur ukuran, huruf kapital, dan transisi warna setiap tautan navigasi. */
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.25s;
+}
+/* Mengubah warna menu menjadi emas saat kursor berada di atasnya. */
+.nav-links a:hover {
+  color: var(--gold);
+}
+/* Menempatkan tautan booking di sisi kanan navbar dan merapikan jarak teks dengan panah. */
+.nav-book {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+/* Menyiapkan ukuran dan garis ikon SVG jika dipakai di tautan. Panah pada HTML saat ini memakai span, sehingga aturan ini tidak mengenainya. */
+.nav-book svg,
+.text-link svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 1.3;
+}
+/* Menyembunyikan pemicu menu HP pada tampilan desktop. */
+.menu-toggle {
+  display: none;
+}
+/* Menyembunyikan checkbox secara visual; label tetap bisa mengubah statusnya untuk membuka menu tanpa JavaScript. */
+.menu-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Membuat area pembuka yang tinggi dengan latar gelap. Position relative menjadi acuan posisi teks dan lapisan di dalamnya. */
+.hero {
+  height: min(920px, 100vh);
+  min-height: 720px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  background: #201b17;
+}
+/* Memenuhi area hero dengan foto tanpa merusak proporsi; bagian foto yang berlebih dipotong dan titik fokusnya diatur. */
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+}
+/* Menutup foto dengan gradasi gelap agar tulisan putih di atasnya lebih mudah dibaca. */
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(18, 14, 12, 0.78) 0%,
+      rgba(18, 14, 12, 0.49) 40%,
+      rgba(18, 14, 12, 0.08) 72%
+    ),
+    linear-gradient(0deg, rgba(15, 11, 9, 0.38), transparent 35%);
+}
+/* Menempatkan kelompok judul dan tombol di atas foto, agak ke kiri dan mendekati tengah secara vertikal. */
+.hero-copy {
+  position: absolute;
+  z-index: 2;
+  left: clamp(28px, 10vw, 150px);
+  top: 52%;
+  transform: translateY(-44%);
+}
+/* Mengatur label kecil di atas judul: warna emas, huruf kapital, dan garis dekoratif berjajar. */
+.eyebrow {
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+/* Mengubah span kosong menjadi garis horizontal di samping label. */
+.eyebrow span {
+  width: 35px;
+  height: 1px;
+  background: currentColor;
+}
+/* Memakai emas yang lebih terang untuk label pada latar gelap. */
+.eyebrow--light {
+  color: #e0c495;
+}
+/* Menyamakan font serif dan ketebalan judul agar identitas visual konsisten. */
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+}
+/* Membuat judul utama besar dan rapat. Clamp membatasi ukuran minimum dan maksimum sambil mengikuti lebar layar. */
+h1 {
+  font-size: clamp(58px, 6.3vw, 100px);
+  line-height: 0.97;
+  letter-spacing: -0.045em;
+  margin: 27px 0 28px;
+  max-width: 880px;
+}
+/* Menonjolkan kata dalam em dengan warna emas; gaya miring berasal dari elemen em. */
+h1 em,
+h2 em {
+  color: var(--gold);
+  font-weight: 500;
+}
+/* Mengatur deskripsi pembuka dengan font serif, jarak baris lega, dan warna sedikit transparan. */
+.hero-subtitle {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.6;
+  opacity: 0.88;
+}
+/* Menyusun tombol layanan dan tautan WhatsApp berdampingan di bawah deskripsi. */
+.hero-actions {
+  margin-top: 42px;
+  display: flex;
+  align-items: center;
+  gap: 37px;
+}
+/* Membuat gaya tombol bersama: tinggi minimum, ruang dalam, teks kapital, serta isi yang rata tengah. */
+.button {
+  min-height: 54px;
+  padding: 0 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+}
+/* Menyiapkan ukuran ikon SVG dalam tombol jika digunakan; panah span pada HTML saat ini tidak terpengaruh. */
+.button svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.3;
+}
+/* Memberi tombol latar emas dan teks gelap agar ajakan bertindak mudah terlihat. */
+.button--gold {
+  background: var(--gold);
+  color: #211a15;
+}
+/* Mencerahkan tombol dan mengangkatnya sedikit saat kursor diarahkan ke tombol. */
+.button--gold:hover {
+  background: #dfc18e;
+  transform: translateY(-2px);
+}
+/* Membuat tautan teks dengan garis bawah dekoratif dan jarak antara tulisan dengan panah. */
+.text-link {
+  width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(41, 35, 31, 0.38);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+/* Mencerahkan garis bawah tautan yang berada di latar gelap. */
+.text-link--light {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+/* Menempatkan slogan secara vertikal di sisi kanan hero sebagai dekorasi. */
+.hero-vertical {
+  position: absolute;
+  z-index: 2;
+  right: 38px;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  writing-mode: vertical-rl;
+  font-size: 8px;
+  letter-spacing: 0.29em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+/* Membuat garis vertikal putih untuk melengkapi slogan. */
+.hero-vertical span {
+  width: 1px;
+  height: 54px;
+  background: white;
+}
+/* Menempatkan petunjuk gulir di tengah bawah hero; translateX mengimbangi lebar elemennya. */
+.scroll-note {
+  position: absolute;
+  z-index: 2;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 8px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+/* Memperbesar dan mewarnai panah petunjuk gulir. */
+.scroll-note span {
+  font-size: 17px;
+  color: var(--gold);
+}
+
+/* Memberi ruang atas-bawah dan tepi yang konsisten pada bagian About, Services, dan Gallery. */
+.section {
+  padding: 140px clamp(28px, 7.5vw, 115px);
+}
+/* Membagi bagian cerita menjadi kolom foto dan teks, dengan jarak fleksibel di antaranya. */
+.about {
+  display: grid;
+  grid-template-columns: minmax(300px, 42%) 1fr;
+  gap: clamp(60px, 10vw, 160px);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+/* Menentukan tinggi wadah foto dan menyisakan ruang untuk bingkai dekoratif. */
+.about-image-wrap {
+  height: 700px;
+  position: relative;
+  padding: 0 0 36px 36px;
+}
+/* Membuat bingkai emas memakai elemen semu sehingga tidak perlu elemen HTML tambahan. */
+.about-image-wrap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72%;
+  height: 72%;
+  border: 1px solid var(--gold);
+}
+/* Memenuhi wadah foto, mempertahankan bagian atas foto, dan sedikit mengurangi intensitas warnanya. */
+.about-image-wrap img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(0.82);
+}
+/* Menempatkan keterangan foto di tepi bawah kanan dengan garis emas dan tulisan miring. */
+.image-caption {
+  position: absolute;
+  right: -80px;
+  bottom: 58px;
+  padding: 16px 0 16px 22px;
+  border-left: 1px solid var(--gold);
+  font-family: var(--serif);
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.6;
+}
+/* Memberi ruang di sisi kanan kelompok teks cerita. */
+.about-copy {
+  padding-right: 5vw;
+}
+/* Mengatur ukuran responsif judul bagian, jarak baris, dan jarak terhadap konten di bawahnya. */
+h2 {
+  font-size: clamp(48px, 5vw, 74px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin: 24px 0 50px;
+}
+/* Membatasi lebar paragraf agar nyaman dibaca dan memberi lekukan ke kanan pada layar besar. */
+.about-body {
+  max-width: 500px;
+  margin-left: clamp(0px, 5vw, 80px);
+}
+/* Mengatur warna, ukuran, jarak baris, dan jarak antarparagraf cerita. */
+.about-body p {
+  color: #625a54;
+  font-size: 13px;
+  line-height: 1.9;
+  margin-bottom: 22px;
+}
+/* Membedakan paragraf pengantar dengan font serif yang lebih besar. */
+.about-body .intro {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.65;
+  color: var(--espresso);
+}
+/* Memberi jarak tambahan sebelum tautan menuju galeri. */
+.about-body .text-link {
+  margin-top: 14px;
+}
+/* Menempatkan ornamen bunga samar di pojok bagian cerita agar tidak mendominasi konten. */
+.about-floral {
+  position: absolute;
+  right: -30px;
+  bottom: 20px;
+  color: var(--gold);
+  opacity: 0.16;
+}
+/* Menentukan ukuran dan ketebalan garis ornamen SVG; currentColor mengikuti warna teks induknya. */
+.floral-mark {
+  width: 130px;
+  stroke: currentColor;
+  stroke-width: 0.8;
+}
+
+/* Memberi latar beige agar bagian layanan berbeda dari bagian sekitarnya. */
+.services {
+  background: var(--beige);
+}
+/* Menyusun judul dan deskripsi layanan berdampingan serta meratakan bagian bawahnya. */
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 70px;
+}
+/* Menghapus margin bawah judul agar jarak dikendalikan oleh wadah heading. */
+.section-heading h2 {
+  margin-bottom: 0;
+}
+/* Membatasi lebar deskripsi layanan dan mengatur keterbacaannya; tanda > hanya memilih anak langsung. */
+.section-heading > p {
+  color: #6f655e;
+  max-width: 350px;
+  font-size: 12px;
+  line-height: 1.9;
+  margin-bottom: 7px;
+}
+/* Menyusun empat kartu layanan dalam empat kolom dengan lebar sama. */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+/* Membuat wadah kartu foto dengan tinggi tetap dan memotong gambar yang membesar saat hover. */
+.service-card {
+  height: 500px;
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+/* Mengisi kartu dengan foto proporsional serta menyiapkan transisi zoom dan saturasi. */
+.service-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.75);
+  transition:
+    transform 0.8s ease,
+    filter 0.5s;
+}
+/* Memperbesar foto sedikit dan menguatkan warnanya saat kartu disentuh kursor. */
+.service-card:hover img {
+  transform: scale(1.045);
+  filter: saturate(0.95);
+}
+/* Menggelapkan bagian bawah kartu supaya judul layanan terbaca di atas foto. */
+.service-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(27, 19, 16, 0.78), rgba(27, 19, 16, 0.03) 67%);
+}
+/* Menempatkan nomor urut layanan di pojok kiri atas kartu. */
+.service-number {
+  position: absolute;
+  left: 24px;
+  top: 23px;
+  font-family: var(--serif);
+  font-size: 12px;
+}
+/* Menempatkan deskripsi singkat dan nama layanan di kiri bawah kartu. */
+.service-info {
+  position: absolute;
+  left: 24px;
+  bottom: 28px;
+}
+/* Membuat deskripsi layanan kecil, kapital, dan berwarna emas muda. */
+.service-info span {
+  color: #e2c997;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+/* Mengatur ukuran responsif nama layanan dan jaraknya dari deskripsi. */
+.service-info h3 {
+  font-size: clamp(21px, 2vw, 29px);
+  margin-top: 8px;
+}
+/* Membuat kotak panah di kanan bawah kartu dengan isi tepat di tengah. */
+.service-arrow {
+  position: absolute;
+  right: 21px;
+  bottom: 27px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: grid;
+  place-items: center;
+  transition: 0.3s;
+}
+/* Menyiapkan garis ikon SVG bila digunakan; panah kartu saat ini berupa karakter teks. */
+.service-arrow svg {
+  width: 14px;
+  stroke: white;
+  stroke-width: 1.3;
+}
+/* Mengubah kotak panah menjadi emas saat kartu di-hover sebagai umpan balik visual. */
+.service-card:hover .service-arrow {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--espresso);
+}
+
+/* Memberi ruang ekstra di bawah galeri sebelum bagian kontak. */
+.gallery {
+  padding-bottom: 170px;
+}
+/* Menyusun judul galeri dan tautan Instagram dalam dua kolom. */
+.gallery-heading {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  margin-bottom: 70px;
+}
+/* Membuat label galeri membentang dari garis kolom pertama sampai terakhir. */
+.gallery-heading .eyebrow {
+  grid-column: 1 / -1;
+}
+/* Menghapus margin bawah judul galeri supaya selaras dengan tautan di sebelahnya. */
+.gallery-heading h2 {
+  margin-bottom: 0;
+}
+/* Menyesuaikan jarak bawah tautan Instagram terhadap judul galeri. */
+.gallery-heading .text-link {
+  margin-bottom: 12px;
+}
+/* Menyusun foto dengan CSS Grid berukuran bervariasi untuk menghasilkan tampilan kolase. */
+.masonry {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr 0.88fr;
+  grid-template-rows: 300px 240px 320px;
+  gap: 14px;
+}
+/* Membuat wadah foto sebagai acuan posisi caption dan memotong gambar saat zoom. */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  background: var(--beige);
+}
+/* Memenuhi bidang galeri dengan foto proporsional dan menyiapkan transisi pembesaran. */
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s;
+  filter: saturate(0.82);
+}
+/* Memperbesar foto sedikit saat pengunjung mengarahkan kursor. */
+.gallery-item:hover img {
+  transform: scale(1.035);
+}
+/* Menyiapkan caption di kiri bawah foto; awalnya transparan dan sedikit bergeser ke bawah. */
+.gallery-item figcaption {
+  position: absolute;
+  left: 18px;
+  bottom: 17px;
+  color: white;
+  font-family: var(--serif);
+  font-size: 12px;
+  font-style: italic;
+  text-shadow: 0 1px 8px #000;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: 0.3s;
+}
+/* Menampilkan caption dan mengembalikannya ke posisi semula ketika foto di-hover. */
+.gallery-item:hover figcaption {
+  opacity: 1;
+  transform: none;
+}
+/* Mengatur posisi foto A di grid; batas akhir grid-row tidak termasuk baris berikutnya. */
+.gallery-item--a {
+  grid-row: 1 / 3;
+}
+/* Mengatur posisi foto B di dalam susunan grid galeri. */
+.gallery-item--b {
+  grid-row: 1 / 2;
+}
+/* Mengatur posisi dan bentangan foto C di dalam grid galeri. */
+.gallery-item--c {
+  grid-column: 3;
+  grid-row: 1 / 3;
+}
+/* Mengatur posisi dan bentangan foto D di dalam grid galeri. */
+.gallery-item--d {
+  grid-column: 2;
+  grid-row: 2 / 4;
+}
+/* Mengatur posisi foto E. Pada desktop ada aturan selector yang sama di bawah; nilai terakhir mengalahkan nilai sebelumnya. */
+.gallery-item--e {
+  grid-column: 1 / 2;
+  grid-row: 3;
+}
+/* Menggeser titik fokus foto C agar bagian yang ditampilkan lebih sesuai dengan bingkainya. */
+.gallery-item--c img {
+  object-position: center 35%;
+}
+/* Mengatur posisi foto E. Pada desktop ada aturan selector yang sama di bawah; nilai terakhir mengalahkan nilai sebelumnya. */
+.gallery-item--e {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+/* Membuat area kontak berwarna burgundy, dengan semua isi tersusun vertikal dan rata tengah. */
+.contact {
+  min-height: 650px;
+  background: var(--burgundy);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 110px 24px 95px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+/* Membuat pola lingkaran berulang dari gradasi radial sebagai dekorasi latar yang samar. */
+.contact-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.09;
+  background-image:
+    radial-gradient(circle at center, transparent 0 44px, #d9b77c 45px 46px, transparent 47px),
+    radial-gradient(circle at center, transparent 0 92px, #d9b77c 93px 94px, transparent 95px);
+  background-size: 230px 230px;
+}
+/* Mengangkat isi kontak di atas pola latar; :not mengecualikan elemen pola itu sendiri. */
+.contact > *:not(.contact-pattern) {
+  position: relative;
+  z-index: 1;
+}
+/* Mengecilkan ornamen bunga di bagian kontak dan memberinya warna emas. */
+.contact .floral-mark {
+  width: 68px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+/* Mengatur ukuran dan ruang di sekitar judul ajakan menghubungi salon. */
+.contact h2 {
+  font-size: clamp(50px, 5.5vw, 78px);
+  margin: 22px 0 24px;
+}
+/* Mengatur paragraf kontak dengan font serif dan transparansi lembut, kecuali label kecil di atas judul. */
+.contact > p:not(.eyebrow) {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.7;
+  opacity: 0.72;
+}
+/* Memberi jarak atas dan lebar minimum pada tombol WhatsApp. */
+.contact-button {
+  margin-top: 37px;
+  min-width: 230px;
+}
+/* Menampilkan nomor telepon di bawah tombol dengan teks kecil dan jarak huruf lebar. */
+.phone {
+  margin-top: 22px;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  opacity: 0.65;
+}
+
+/* Memberi latar ivory dan ruang tepi untuk bagian informasi penutup. */
+footer {
+  padding: 85px clamp(28px, 7.5vw, 115px) 32px;
+  background: var(--ivory);
+}
+/* Membagi footer menjadi kolom merek, lokasi, kontak, dan tombol kembali ke atas. */
+.footer-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 50px;
+  padding-bottom: 70px;
+  align-items: start;
+}
+/* Mengatur slogan di bawah logo footer dengan font serif miring. */
+.footer-brand p {
+  color: #736a63;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 25px;
+  font-style: italic;
+}
+/* Menyusun isi setiap kolom informasi secara vertikal dengan jarak yang konsisten. */
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+/* Membedakan judul kolom footer dengan teks kecil berwarna emas dan huruf kapital. */
+.footer-column > span {
+  color: var(--gold);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+/* Mengubah warna tautan footer saat di-hover agar terlihat interaktif. */
+.footer-column a:hover {
+  color: var(--burgundy);
+}
+/* Membuat tombol persegi bergaris dengan panah di tengah untuk kembali ke bagian awal. */
+.back-top {
+  width: 43px;
+  height: 43px;
+  border: 1px solid #bdb1a4;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+}
+/* Membuat baris hak cipta dan slogan dengan garis pemisah serta posisi saling berjauhan. */
+.footer-bottom {
+  border-top: 1px solid #d9cfc1;
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  color: #8d837a;
+  font-size: 8px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+/* Aturan tablet dan HP: hanya berlaku saat lebar viewport maksimal 900px dan menyesuaikan aturan desktop di atas. */
+@media (max-width: 900px) {
+  /* Mengecilkan tinggi navbar menjadi 80px dan memakai dua kolom untuk logo serta pemicu menu. */
+  .navbar {
+    height: 80px;
+    grid-template-columns: 1fr auto;
+    padding: 0 22px;
+  }
+  /* Menyembunyikan tautan booking di navbar agar ruang layar kecil cukup untuk logo dan pemicu menu. */
+  .navbar .nav-book {
+    display: none;
+  }
+  /* Menampilkan label menu sebagai dua garis tersusun vertikal pada layar kecil. */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 36px;
+    padding: 10px 0 10px 10px;
+    background: none;
+    border: 0;
+  }
+  /* Membentuk garis putih pada ikon menu HP. */
+  .menu-toggle span {
+    height: 1px;
+    width: 26px;
+    background: white;
+  }
+  /* Memendekkan garis terakhir ikon menu dan meratakannya ke kanan. */
+  .menu-toggle span:last-child {
+    width: 18px;
+    align-self: flex-end;
+  }
+  /* Mengubah menu menjadi panel vertikal di bawah navbar; panel awalnya disembunyikan sampai checkbox dicentang. */
+  .nav-links {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 80px;
+    padding: 32px;
+    background: var(--burgundy);
+    flex-direction: column;
+    gap: 25px;
+  }
+  /* Menampilkan menu jika class ini ditambahkan; HTML saat ini memakai status checkbox sebagai pemicu. */
+  .nav-links--open {
+    display: flex;
+  }
+  /* Menampilkan menu saat checkbox dicentang. Tanda ~ memilih saudara sesudah checkbox dengan induk yang sama. */
+  .menu-checkbox:checked ~ .nav-links {
+    display: flex;
+  }
+  /* Menyesuaikan hero dengan tinggi viewport kecil (svh), dengan batas tinggi minimum 700px. */
+  .hero {
+    min-height: 700px;
+    height: 100svh;
+  }
+  /* Menggeser fokus foto ke 63% arah horizontal agar pemotongan pada layar kecil lebih sesuai. */
+  .hero-image {
+    object-position: 63% center;
+  }
+  /* Menyesuaikan gradasi gelap pada layar kecil agar teks tetap terbaca. */
+  .hero-shade {
+    background:
+      linear-gradient(90deg, rgba(18, 14, 12, 0.75), rgba(18, 14, 12, 0.12)),
+      linear-gradient(0deg, rgba(15, 11, 9, 0.55), transparent 50%);
+  }
+  /* Menyesuaikan posisi kelompok teks hero agar memiliki ruang di tepi layar kecil. */
+  .hero-copy {
+    left: 24px;
+    right: 24px;
+    top: 51%;
+  }
+  /* Menyesuaikan ukuran judul utama dengan lebar layar kecil, dibatasi antara 50px dan 72px. */
+  h1 {
+    font-size: clamp(50px, 15vw, 72px);
+  }
+  /* Menyembunyikan slogan vertikal untuk menghemat ruang layar kecil. */
+  .hero-vertical {
+    display: none;
+  }
+  /* Memindahkan petunjuk gulir ke kiri dan membatalkan pergeseran horizontal desktop. */
+  .scroll-note {
+    left: 24px;
+    transform: none;
+  }
+  /* Mengurangi padding bagian menjadi 90px vertikal dan 24px horizontal pada layar kecil. */
+  .section {
+    padding: 90px 24px;
+  }
+  /* Menumpuk foto dan cerita dalam satu kolom supaya mudah dibaca di layar kecil. */
+  .about {
+    grid-template-columns: 1fr;
+    gap: 65px;
+  }
+  /* Mengurangi tinggi dan ruang bingkai foto agar sesuai dengan layar yang lebih kecil. */
+  .about-image-wrap {
+    height: 570px;
+    padding-left: 20px;
+  }
+  /* Memindahkan caption ke area foto dengan latar gelap agar tetap terbaca di layar kecil. */
+  .image-caption {
+    right: 18px;
+    bottom: 14px;
+    color: white;
+    background: rgba(41, 35, 31, 0.75);
+    padding: 10px 14px;
+    border: 0;
+  }
+  /* Menghapus padding teks cerita untuk memanfaatkan lebar layar kecil. */
+  .about-copy {
+    padding: 0;
+  }
+  /* Menghapus lekukan paragraf ke kanan agar teks sejajar pada layar kecil. */
+  .about-body {
+    margin-left: 0;
+  }
+  /* Menumpuk judul dan deskripsi layanan secara vertikal. */
+  .section-heading {
+    display: block;
+  }
+  /* Menambahkan jarak antara deskripsi layanan dan judul di atasnya. */
+  .section-heading > p {
+    margin-top: 28px;
+  }
+  /* Mengurangi susunan layanan menjadi dua kolom pada layar sampai 900px. */
+  .service-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* Menyesuaikan tinggi kartu layanan untuk tampilan tablet. */
+  .service-card {
+    height: 460px;
+  }
+  /* Mengatur ulang galeri menjadi dua kolom dengan tinggi baris yang sesuai layar kecil. */
+  .masonry {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 340px);
+  }
+  /* Menempatkan ulang foto A sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--a {
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+  /* Menempatkan ulang foto B sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--b {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  /* Menempatkan ulang foto C sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--c {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  /* Menempatkan ulang foto D sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--d {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  /* Menempatkan ulang foto E sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--e {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+
+/* Aturan HP kecil: berlaku sampai 600px; aturan 900px tetap berlaku kecuali ditimpa di sini. */
+@media (max-width: 600px) {
+  /* Menyesuaikan posisi kelompok teks hero agar memiliki ruang di tepi layar kecil. */
+  .hero-copy {
+    transform: translateY(-42%);
+  }
+  /* Menumpuk tombol dan tautan hero secara vertikal agar tidak berdesakan di HP. */
+  .hero-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  /* Menyembunyikan pemisah baris khusus desktop supaya teks di HP membungkus secara alami. */
+  .desktop-break {
+    display: none;
+  }
+  /* Mengurangi tinggi dan ruang bingkai foto agar sesuai dengan layar yang lebih kecil. */
+  .about-image-wrap {
+    height: 510px;
+  }
+  /* Mengatur judul bagian menjadi 45px pada HP kecil. */
+  h2 {
+    font-size: 45px;
+  }
+  /* Mengubah layanan menjadi deretan yang bisa digeser mendatar; scroll-snap membuat pergeseran berhenti rapi di kartu dan scrollbar disembunyikan. */
+  .service-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-right: -24px;
+    padding-right: 24px;
+    scrollbar-width: none;
+  }
+  /* Memberi kartu lebar minimum 80% viewport dan menjadikan tepi awal kartu sebagai titik berhenti saat digeser. */
+  .service-card {
+    min-width: 80vw;
+    height: 480px;
+    scroll-snap-align: start;
+  }
+  /* Menumpuk judul galeri dan tautan Instagram pada HP. */
+  .gallery-heading {
+    display: block;
+  }
+  /* Memberi jarak di atas tautan Instagram setelah judul ditumpuk. */
+  .gallery-heading .text-link {
+    margin-top: 25px;
+  }
+  /* Mengatur ulang galeri menjadi dua kolom dengan tinggi baris yang sesuai layar kecil. */
+  .masonry {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 430px 240px 300px;
+    gap: 8px;
+  }
+  /* Menempatkan ulang foto A sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--a {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  /* Menempatkan ulang foto B sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--b {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  /* Menempatkan ulang foto C sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--c {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  /* Menempatkan ulang foto D sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--d {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  /* Menempatkan ulang foto E sesuai susunan galeri pada ukuran layar ini. */
+  .gallery-item--e {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  /* Menyembunyikan caption galeri pada HP kecil. */
+  .gallery-item figcaption {
+    display: none;
+  }
+  /* Menyesuaikan tinggi minimum bagian kontak untuk layar HP. */
+  .contact {
+    min-height: 680px;
+  }
+  /* Mengatur ukuran judul kontak menjadi 47px pada HP kecil. */
+  .contact h2 {
+    font-size: 47px;
+  }
+  /* Mengubah footer menjadi dua kolom pada HP kecil. */
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+  }
+  /* Membuat area logo footer membentang di kedua kolom pada layar HP. */
+  .footer-brand {
+    grid-column: 1 / 3;
+  }
+  /* Menempatkan tombol kembali ke atas secara absolut di sisi kanan pada layar HP. */
+  .back-top {
+    position: absolute;
+    right: 24px;
+  }
+  /* Menambah jarak antarisi dan jarak baris agar footer kecil lebih mudah dibaca. */
+  .footer-bottom {
+    gap: 20px;
+    line-height: 1.5;
+  }
+}
